@@ -1,0 +1,1 @@
+web: gunicorn pickplant.wsgi --log-file -
