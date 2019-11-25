@@ -24,5 +24,4 @@ def form(request):
         data = []
         for plant in plants:
             data.append(plant.toObject())
-        results = json.dumps(data)
-        return Response(results, status=status.HTTP_201_CREATED)
+        return Response(data, status=status.HTTP_201_CREATED)
