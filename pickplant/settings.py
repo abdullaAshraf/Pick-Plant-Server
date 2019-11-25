@@ -25,7 +25,7 @@ SECRET_KEY = '+yrs#r=ic4c_6i*to@z#9($7k++wuhc(7vy3v^a6_97t*_$^vb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['pickplant.herokuapp.com']
+ALLOWED_HOSTS = ['pickplant.herokuapp.com','127.0.0.1']
 
 
 # Application definition
@@ -37,11 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pickapp'
+    'pickapp',
+    'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,6 +73,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'pickplant.wsgi.application'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Database
@@ -129,7 +134,7 @@ STATICFILES_DIRS = (
 )
 
 #  Add configuration for static files storage using whitenoise
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 import dj_database_url 
 prod_db  =  dj_database_url.config(conn_max_age=500)
