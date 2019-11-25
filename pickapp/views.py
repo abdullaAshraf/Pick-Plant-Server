@@ -21,5 +21,8 @@ plants = [
 def form(request):
     if request.method == 'POST':
         print(request.data)
-        results = json.dumps(plants)
+        data = []
+        for plant in plants:
+            data.append(plant.toObject)
+        results = json.dumps(data)
         return Response(results, status=status.HTTP_201_CREATED)
