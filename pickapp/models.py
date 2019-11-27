@@ -14,11 +14,13 @@ class Plant(models.Model):
     soil = models.CharField(max_length=200)
     lifespan = models.FloatField()
     image = models.CharField(max_length=300)
+    match = models.FloatField()
+    index = models.IntegerField()
     
 
-    def __init__(self, name, url, category, toxic, maxGrowth, temperature,airHumidity, light, watering,lightDuration, soil ,lifespan,image ):
+    def __init__(self, name, url, category, toxic, maxGrowth, temperature,airHumidity, light, watering,lightDuration, soil ,lifespan,image,match,index):
         super().__init__()
-        self.name, self.url, self.category, self.toxic,self.maxGrowth,self.temperature,self.airHumidity,self.light,self.watering,self.soil,self.lifespan,self.image,self.lightDuration  = name, url, category,toxic,maxGrowth,temperature,airHumidity,light,watering,soil,lifespan,image,lightDuration
+        self.name, self.url, self.category, self.toxic,self.maxGrowth,self.temperature,self.airHumidity,self.light,self.watering,self.soil,self.lifespan,self.image,self.lightDuration,self.match,self.index  = name, url, category,toxic,maxGrowth,temperature,airHumidity,light,watering,soil,lifespan,image,lightDuration,match,index
 
     def fromObject(self,plant):
         self.name = plant["name"]
@@ -65,7 +67,8 @@ class Plant(models.Model):
             "light": {
                 "min": float(light[0]),
                 "max": float(light[1])
-            }
+            },
+            "match": self.match,
         }
         return plant
     
