@@ -12,9 +12,9 @@ class PlantView(viewsets.ModelViewSet):
     serializer_class = PlantSerializer
 
 plants = [
-    Plant("African violet","https://www.houseplantsexpert.com/african-violet-care-information.html","","40,40,40","16,24","bright",72,"fast draining soil mix","40,70"),
-    Plant("European fan","https://www.houseplantsexpert.com/european-fan-palm.html","","91,91,122","4,24","bright",24,"fast draining soil mix","20,30"),
-    Plant("Christmas cheer","https://www.houseplantsexpert.com/christmas-cheer-sedum-rubrotinctum.html","cat,dog","30,30,30","18,24","direct",48,"cactus ready mix","20,50")
+    Plant("African violet","https://www.houseplantsexpert.com/african-violet-care-information.html","African",False,"40,40","16,24","40,70","1.3,3",3,4,"Loam",2,""),
+    Plant("European fan","https://www.houseplantsexpert.com/european-fan-palm.html","European",False,"91,122","4,24","20,30","1.3,3",5,6,"Sandy",10,""),
+    Plant("Christmas cheer","https://www.houseplantsexpert.com/christmas-cheer-sedum-rubrotinctum.html","Cheer",True,"30,30","18,24","20,50","0,0.3",20,10,"Sandy",50,"")
 ]
 
 @api_view(['GET', 'POST'])

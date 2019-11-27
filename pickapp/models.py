@@ -1,56 +1,70 @@
 from django.db import models
 
 class Plant(models.Model):
-    name = models.CharField(max_length=100)
-    url = models.CharField(max_length=200)
-    poisonous = models.CharField(max_length=100)
-    maxGrowth = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    url = models.CharField(max_length=300)
+    category = models.CharField(max_length=100)
+    toxic = models.BooleanField()
+    maxGrowth = models.CharField(max_length=50)
     temperature = models.CharField(max_length=50)
-    light = models.CharField(max_length=50)
-    watering = models.FloatField(max_length=100)
-    soil = models.CharField(max_length=200)
     airHumidity = models.CharField(max_length=50)
+    light = models.CharField(max_length=50)
+    watering = models.IntegerField()
+    lightDuration = models.IntegerField()
+    soil = models.CharField(max_length=200)
+    lifespan = models.FloatField()
+    image = models.CharField(max_length=300)
+    
 
-    def __init__(self, name, url, poisonous, maxGrowth, temperature, light, watering, soil , airHumidity):
-        self.name, self.url, self.poisonous,self.maxGrowth,self.temperature,self.light,self.watering,self.soil,self.airHumidity  = name, url, poisonous,maxGrowth,temperature,light,watering,soil,airHumidity
+    def __init__(self, name, url, category, toxic, maxGrowth, temperature,airHumidity, light, watering,lightDuration, soil ,lifespan,image ):
+        super().__init__()
+        self.name, self.url, self.category, self.toxic,self.maxGrowth,self.temperature,self.airHumidity,self.light,self.watering,self.soil,self.lifespan,self.image,self.lightDuration  = name, url, category,toxic,maxGrowth,temperature,airHumidity,light,watering,soil,lifespan,image,lightDuration
 
     def fromObject(self,plant):
         self.name = plant["name"]
         self.url = plant["url"]
-        self.light = plant["light"]
+        self.category = plant["category"]
+        self.toxic = plant["toxic"]
+        self.image = plant["image"]
+        self.lightDuration = plant["lightDuration"]
         self.soil = plant["soil"]
         self.watering = plant["watering"]
-        self.poisonous = ",".join(plant["poisonous"].keys())
+        self.lifespan = plant["lifespan"]
         self.maxGrowth = ",".join(plant["maxGrowth"].values())
         self.temperature = ",".join(plant["temperature"].values())
         self.airHumidity = ",".join(plant["airHumidity"].values())
+        self.light = ",".join(plant["light"].values())
 
     def toObject(self):
         growth = self.maxGrowth.split(',')
         temp = self.temperature.split(',')
         air = self.airHumidity.split(',')
+        light = self.light.split(',')
         plant = {
             "name": self.name,
             "url": self.url,
-            "light": self.light,
+            "category": self.category,
+            "lightDuration": self.lightDuration,
             "soil": self.soil,
             "watering": self.watering,
-            "poisonous" : {
-                "cat": "cat" in self.poisonous,
-                "dog": "dog" in self.poisonous
-            },
+            "image": self.image,
+            "lifespan": self.lifespan,
+            "toxic": self.toxic,
             "maxGrowth" : {
-                "width": float(growth[0]),
-                "length": float(growth[1]),
-                "height": float(growth[2])
+                "diameter": int(growth[0]),
+                "height": int(growth[1])
             },
             "temperature": {
-                "min": float(temp[0]),
-                "max": float(temp[1])
+                "min": int(temp[0]),
+                "max": int(temp[1])
             },
             "airHumidity": {
-                "min": float(air[0]),
-                "max": float(air[1])
+                "min": int(air[0]),
+                "max": int(air[1])
+            },
+            "light": {
+                "min": float(light[0]),
+                "max": float(light[1])
             }
         }
         return plant
