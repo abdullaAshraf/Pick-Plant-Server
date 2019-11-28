@@ -12,6 +12,7 @@ import csv
 import io
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
+import os
 
 class PlantView(viewsets.ModelViewSet):
     queryset = Plant.objects.all()
@@ -86,7 +87,9 @@ def pickML(plant):
     return names,perceision
 
 def fillDatabase():
-    with open('C:\\Users\\aabdu\\Desktop\\model\\first_look.csv') as csv_file:
+    plantsList = list(Plant.objects.all())
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    with open(dir_path +'\\first_look.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
@@ -187,12 +190,17 @@ def fillDatabase():
                     "match" : float(0)
                 }
                 serializer = PlantSerializer(data=plant)
-                print(serializer.is_valid())
                 if(serializer.is_valid()):
-                    serializer.save()
+                    validName = True
+                    for plant in plantsList:
+                        if(plant.name == name):
+                            validName = False
+                            break
+                    if(validName):
+                        serializer.save()
                 
                 #print(serializer.validated_data)
             line_count += 1
         
 
-#fillDatabase()
+fillDatabase()
