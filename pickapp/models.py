@@ -4,31 +4,23 @@ class Plant(models.Model):
     name = models.CharField(max_length=200)
     url = models.CharField(max_length=300)
     category = models.CharField(max_length=100)
-    toxic = models.BooleanField()
     maxGrowth = models.CharField(max_length=50)
     temperature = models.CharField(max_length=50)
     airHumidity = models.CharField(max_length=50)
-    light = models.CharField(max_length=50)
-    watering = models.IntegerField()
-    lightDuration = models.IntegerField()
     soil = models.CharField(max_length=200)
+    light = models.CharField(max_length=50)
+    image = models.CharField(max_length=500)
+    toxic = models.BooleanField()
+    watering = models.IntegerField()
     lifespan = models.FloatField()
-    image = models.CharField(max_length=300)
     match = models.FloatField()
-    index = models.IntegerField()
     
-
-    def __init__(self, name, url, category, toxic, maxGrowth, temperature,airHumidity, light, watering,lightDuration, soil ,lifespan,image,match,index):
-        super().__init__()
-        self.name, self.url, self.category, self.toxic,self.maxGrowth,self.temperature,self.airHumidity,self.light,self.watering,self.soil,self.lifespan,self.image,self.lightDuration,self.match,self.index  = name, url, category,toxic,maxGrowth,temperature,airHumidity,light,watering,soil,lifespan,image,lightDuration,match,index
-
     def fromObject(self,plant):
         self.name = plant["name"]
         self.url = plant["url"]
         self.category = plant["category"]
         self.toxic = plant["toxic"]
         self.image = plant["image"]
-        self.lightDuration = plant["lightDuration"]
         self.soil = plant["soil"]
         self.watering = plant["watering"]
         self.lifespan = plant["lifespan"]
@@ -46,7 +38,6 @@ class Plant(models.Model):
             "name": self.name,
             "url": self.url,
             "category": self.category,
-            "lightDuration": self.lightDuration,
             "soil": self.soil,
             "watering": self.watering,
             "image": self.image,
@@ -71,4 +62,3 @@ class Plant(models.Model):
             "match": self.match,
         }
         return plant
-    
