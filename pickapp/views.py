@@ -38,12 +38,12 @@ def form(request):
 
 def getPlants(names, perceision):
     plants = []
-    plantsList = list(Plant.objects.all())
+    plantsList = fillDatabase()
     for plant in plantsList:
         for i,name in enumerate(names):
-            if name.strip() == plant.name:
-                plant.match = perceision[i]
-                plants.append(plant.toObject())
+            if name.strip() == plant["name"]:
+                plant["match"] = perceision[i]
+                plants.append(plant)
     return plants
 
 
@@ -88,6 +88,7 @@ def pickML(plant):
 
 def fillDatabase():
     plantsList = list(Plant.objects.all())
+    plantsData = []
     dir_path = os.path.dirname(os.path.realpath(__file__))
     with open(dir_path +'/first_look.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -178,10 +179,10 @@ def fillDatabase():
                     "name" : name,
                     "category": category,
                     "toxic" : toxic,
-                    "maxGrowth" : maxGrowthStr,
-                    "temperature" : tempStr,
-                    "airHumidity" : humidityStr,
-                    "light" : lightStr,
+                    "maxGrowth" : maxGrowth,
+                    "temperature" : temp,
+                    "airHumidity" : humidity,
+                    "light" : light,
                     "watering" : water,
                     "soil" : soilStr,
                     "lifespan" : lifespan,
@@ -189,6 +190,8 @@ def fillDatabase():
                     "url" : "none",
                     "match" : float(0)
                 }
+                plantsData.append(plant)
+                '''
                 serializer = PlantSerializer(data=plant)
                 if(serializer.is_valid()):
                     validName = True
@@ -198,9 +201,10 @@ def fillDatabase():
                             break
                     if(validName):
                         serializer.save()
-                
+                '''
                 #print(serializer.validated_data)
             line_count += 1
-        
+            
+    return plantsData
 
 #fillDatabase()
