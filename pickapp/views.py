@@ -89,7 +89,7 @@ def pickML(plant):
 def fillDatabase():
     plantsList = list(Plant.objects.all())
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(dir_path +'\\first_look.csv') as csv_file:
+    with open(dir_path +'/first_look.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
